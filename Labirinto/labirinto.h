@@ -11,6 +11,6 @@ typedef struct{
     int y;
 } Posicao;
 
-bool escolheCaminho(int x, int y, Sala *matriz[], int m, int n, int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes);
+bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes);
 
 #endif
