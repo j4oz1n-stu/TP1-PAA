@@ -2,6 +2,14 @@
 #include <stdbool.h>
 #include "labirinto.h"
 
+#ifdef _WIN32
+    #include <windows.h>
+    #define PAUSA(ms) Sleep(ms) 
+#else
+    #include <unistd.h>
+    #define PAUSA(ms) usleep((ms)*1000)   
+#endif
+
 bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes){
     matriz[x][y].visitado = true;
     if(matriz[x][y].conteudo == 'X' && qtChaves == *qtChavesEncontradas){
@@ -48,4 +56,27 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
     if(matriz[x][y].conteudo == 'C') (*qtChavesEncontradas)--;
     matriz[x][y].visitado = false;
     return false;
+}
+
+void printaMatriz (int m, int n, Sala matriz[m][n]){
+    for (int i=0; i<m; i++){
+        for (int j=0; j<n; j++){
+            if(j==n-1){
+                printf("%c\n", matriz[i][j].conteudo);
+            }
+            else{
+                printf("%c ", matriz[i][j].conteudo);
+            }
+        }
+    }
+}
+
+void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes){
+    int passo = 1;
+    for (int i = iPosicoes-2; i>0; i--){
+        matriz[posicoes[i].x][posicoes[i].y].conteudo = '#';
+        printf("\n--- Passo %d ---\n", passo++);
+        printaMatriz(m, n, matriz);
+        PAUSA(450);
+    }
 }

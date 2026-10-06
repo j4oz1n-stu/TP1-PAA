@@ -12,5 +12,7 @@ typedef struct{
 } Posicao;
 
 bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes);
+void printaMatriz (int m, int n, Sala matriz[m][n]);
+void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes);
 
 #endif

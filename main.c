@@ -41,7 +41,8 @@ int main(){
     
     int iPosicoes = 0;
     int qtdChavesEncontradas = 0;
-    if (escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
+    escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes);
+    /*if (escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
         for(int i = iPosicoes-1; i>0; i--){
             printf("(%d, %d)", posicoes[i].x, posicoes[i].y);
         }
@@ -49,7 +50,8 @@ int main(){
     }
     else{
         printf("não existe caminho possivel");
-    }
+    }*/
+    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes);
 
 
 }
