@@ -59,34 +59,95 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
     return false;
 }
 
-void printaMatriz (int m, int n, Sala matriz[m][n]){
+void limparTela(void) {
+    printf("\x1b[H\x1b[J");
+}
+
+/*void printaMatriz (int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas){
     for (int i=0; i<m; i++){
         for (int j=0; j<n; j++){
             if (matriz[i][j].conteudo=='#'){
-                aplicarCorFundo(FUNDO_VERMELHO);
-                aplicarCorTexto(TEXTO_VERMELHO);
+                aplicarCorFundo(FUNDO_VERDE);
+                aplicarCorTexto(TEXTO_VERDE);
             }
             else if (matriz[i][j].conteudo == '1'){
                 aplicarCorFundo(FUNDO_AZUL);
                 aplicarCorTexto(TEXTO_AZUL);
             }
+            if (matriz[i][j].conteudo == 'X' || matriz[i][j].conteudo == 'A'){
+                aplicarCorFundo(FUNDO_VERDE);
+                aplicarCorTexto(TEXTO_VERDE);   
+            }
             printf("%c", matriz[i][j].conteudo);
             resetarCores();
-            if (j == n - 1) {
-                printf("\n");
-            } else {
-                printf(" ");
-            }
+            printf(" ");
         }
+        if(i==(m/2)-2){
+            printf("        chaves necessarias: %d", qtdChaves);
+        }
+        if (i==(m/2)-1){
+            printf("        chaves encontradas: %d", qtdChavesEncontradas);
+        }
+        printf("\n");
+    }
+}*/
+void printaMatriz(int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas, int passoAtual, int totalPassos) {
+
+    for (int i = 0; i < m; i++) {
+        printf("│ "); // Borda esquerda
+        
+        for (int j = 0; j < n; j++) {
+            // Renderização customizada por elemento
+            if (matriz[i][j].conteudo == '#') {
+                // Imprime um bloco preenchido (espaço duplo com fundo colorido)
+                aplicarCorFundo(FUNDO_VERDE);
+                printf("  "); 
+            } else if (matriz[i][j].conteudo == 'C') {
+                // Destaque para Chave
+                aplicarCorTexto(TEXTO_AMARELO);
+                printf("C ");
+            } else if (matriz[i][j].conteudo == '1') {
+                aplicarCorFundo(FUNDO_AZUL);
+                printf("  ");
+            } else if (matriz[i][j].conteudo == 'X' || matriz[i][j].conteudo == 'A') {
+                aplicarCorFundo(FUNDO_MAGENTA);
+                aplicarCorTexto(TEXTO_MAGENTA);
+                printf("%c ", matriz[i][j].conteudo);
+            } else {
+                printf("%c ", matriz[i][j].conteudo);
+            }
+            
+            resetarCores();
+        }
+        
+        printf("│"); // Borda direita do labirinto
+
+        // 2. PAINEL LATERAL DE STATUS (HUD)
+        if (i == 0) {
+            printf("   ==== PAINEL DE STATUS =====");
+        } else if (i == 1) {
+            printf("   │  Passo:  %-3d / %-3d      │", passoAtual, totalPassos);
+        } else if (i == 2) {
+            printf("   │  Chaves: %d / %-3d        │", qtdChavesEncontradas, qtdChaves);
+        } else if (i == 3) {
+            printf("   ===========================");
+        }
+
+        printf("\n");
     }
 }
 
-void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes){
+void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes, int qtdChaves){
     int passo = 1;
+    int totalPassos = iPosicoes - 2;
+    int qtdChavesEncontradas = 0;
     for (int i = iPosicoes-2; i>0; i--){
+        limparTela();
+        if (matriz[posicoes[i].x][posicoes[i].y].conteudo == 'C') qtdChavesEncontradas++;
         matriz[posicoes[i].x][posicoes[i].y].conteudo = '#';
-        printf("\n--- Passo %d ---\n", passo++);
-        printaMatriz(m, n, matriz);
+        printaMatriz(m, n, matriz, qtdChaves, qtdChavesEncontradas, passo, totalPassos);
+        passo++;
         PAUSA(450);
     }
+    printf("\n");
 }

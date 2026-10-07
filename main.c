@@ -51,7 +51,7 @@ int main(){
     else{
         printf("não existe caminho possivel");
     }*/
-    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes);
+    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves);
 
 
 }
