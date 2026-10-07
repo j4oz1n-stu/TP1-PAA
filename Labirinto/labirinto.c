@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "labirinto.h"
+#include "../Cores/cores.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -61,11 +62,20 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
 void printaMatriz (int m, int n, Sala matriz[m][n]){
     for (int i=0; i<m; i++){
         for (int j=0; j<n; j++){
-            if(j==n-1){
-                printf("%c\n", matriz[i][j].conteudo);
+            if (matriz[i][j].conteudo=='#'){
+                aplicarCorFundo(FUNDO_VERMELHO);
+                aplicarCorTexto(TEXTO_VERMELHO);
             }
-            else{
-                printf("%c ", matriz[i][j].conteudo);
+            else if (matriz[i][j].conteudo == '1'){
+                aplicarCorFundo(FUNDO_AZUL);
+                aplicarCorTexto(TEXTO_AZUL);
+            }
+            printf("%c", matriz[i][j].conteudo);
+            resetarCores();
+            if (j == n - 1) {
+                printf("\n");
+            } else {
+                printf(" ");
             }
         }
     }
