@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>    
-#include "labirinto.h" 
-#include "caminhos.h"
+#include "../Labirinto/labirinto.h" 
 
 void inicializaCaminhos(ListaCaminhos *lista) {
     lista->inicio = (NoCaminho*) malloc(sizeof(NoCaminho));
@@ -33,12 +32,12 @@ void imprimeCaminhos(ListaCaminhos lista) {
     while(aux != NULL) {
         printf("Caminho %d (%d passos): ", contador, aux->tamanhoCaminho);
         for (int i = 0; i < aux->tamanhoCaminho; i++) {
-            printf("(%d, %d)", aux->vetorCaminho[i].x, aux->vetorCaminho[i].y);
+            printf("[%d, %d]", aux->vetorCaminho[i].x, aux->vetorCaminho[i].y);
             if (i < aux->tamanhoCaminho - 1) {
-                printf(" -> ");
+                printf(", ");
             }
         }
-        printf("\n"); 
+        printf("\n\n"); 
         aux = aux->prox;
         contador++;
     }
