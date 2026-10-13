@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "Labirinto/labirinto.h"
+#include "../Labirinto/labirinto.h"
 
 int main(){
     printf("sistema de encontrar possiveis caminhos\n");
@@ -34,6 +34,7 @@ int main(){
             }
         }
     }
+    /*
     for (int i = 0; i <= (linhas * colunas); i++) {
         posicoes[i].x = -1;
         posicoes[i].y = -1;
@@ -50,8 +51,8 @@ int main(){
     }
     else{
         printf("não existe caminho possivel");
-    }*/
-    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves);
+    }
+    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves); */
 
-
+    modoHistoriaInterativo(linhas, colunas, matriz);
 }

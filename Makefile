@@ -1,4 +1,4 @@
 all:
-	gcc main.c Labirinto/labirinto.c Caminhos/caminhos.c Cores/cores.c -o programa
+	gcc Main/main.c Labirinto/labirinto.c Caminhos/caminhos.c Cores/cores.c -o Main/main -g
 run:
-	./programa
+	./Main/main

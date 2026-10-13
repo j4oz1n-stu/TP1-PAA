@@ -18,5 +18,7 @@ void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qt
 void limparTela(void);
 void printaMatriz (int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas, int passoAtual, int totalPassos);
 void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes, int qtdChaves);
+void printaMatrizHistoria(int m, int n, Sala matriz[m][n]);
+void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]);
 
 #endif
