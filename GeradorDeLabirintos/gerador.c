@@ -297,7 +297,6 @@ int escritor(char **matriz, int x, int y, int chave){
         fprintf(arquivo, "\n");
     }
 
-    // Fecha o arquivo
     fclose(arquivo);
     return 0;
 }
