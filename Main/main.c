@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdbool.h>
 #include "../Labirinto/labirinto.h"
 
 int main(){
+    srand(time(NULL));
     printf("sistema de encontrar possiveis caminhos\n");
     printf("digite o caminho do arquivo que contem o labirinto:\n");
     char caminho [100];
@@ -51,7 +53,7 @@ int main(){
     else{
         printf("não existe caminho possivel");
     } */
-    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves);
+    //printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves);
 
     rewind(arquivo);
     fscanf(arquivo, "%d %d", &linhas, &colunas);

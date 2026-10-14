@@ -26,7 +26,5 @@
 void aplicarCorTexto(char cor[]);
 void aplicarCorFundo(char cor[]);
 void resetarCores();
-char* corTextoAleatoria();
-char* corFundoAleatoria();
 
 #endif

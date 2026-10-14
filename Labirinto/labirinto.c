@@ -201,6 +201,14 @@ static bool verificaPosicaoEscolhida(int x, int y, int m, int n, Sala matriz[m][
     return false;
 }
 
+static void reiniciarVisitasLabirinto(int m, int n, Sala matriz[m][n]){
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            matriz[i][j].visitado = false;
+        }
+    }
+}
+
 void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
 
     /*
@@ -221,43 +229,42 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     printf("\nIndignado com a tirania de Creta, o jovem príncipe Teseu ofereceu-se como tributo, jurando\nlibertar seu povo. Ao desembarcar na ilha, sua coragem conquistou o coração da princesa Ariadne, filha\nde Minos. Sabendo que o Labirinto era uma sentença de morte, Ariadne traiu seu próprio pai:\nentregou a Teseu uma espada e um novelo de fio de ouro para guiar seus passos na escuridão.\n");
     PAUSA(TEMPO_PAUSA);
 
-    printf("\nTeseu encontrou o Minotauro e, em uma batalha feroz, abateu a fera. Porém, os urros mortais\ndo monstro ecoaram por toda a ilha. Descobrindo a traição de sua filha e a queda do guardião de Creta,\no Rei Minos tomou-se de fúria. Determinado a impedir que Teseu saia vivo, o rei ordenou que seus\nsoldados marchassem para o Labirinto, tomando as entradas e espalhando guardas pelas galerias para\ncaçar o herói.\n");
+    printf("\nTeseu encontrou o Minotauro e, em uma batalha feroz, abateu a fera. Porém, os urros mortais\ndo monstro ecoaram por toda a ilha. Descobrindo a traição de sua filha e a queda do guardião de Creta,\no Rei Minos tomou-se de fúria. Determinado a impedir que Teseu saia vivo, o rei ordenou que seus\nsoldados marchassem para o Labirinto, tomando a entrada e espalhando guardas pelas galerias para\ncaçar o herói.\n");
     PAUSA(TEMPO_PAUSA);
 
     printf("\nDurante o combate brutal contra o Minotauro, o fio de ouro de Ariadne se rasgou e se perdeu na escuridão. Com as\npatrulhas de Minos se aproximando da entrada do Labirinto, Teseu não pode dar nenhum passo em\nfalso. Desorientado e sem margem para erros, o herói clama aos deuses por ajuda.\n");
     PAUSA(TEMPO_PAUSA);
 
     printf("\nVocê é a manifestação da vontade divina! Guie Teseu até a saída do Labirinto, antes que os\nsoldados de Minos o alcancem!\n");
-    PAUSA(TEMPO_PAUSA);
     resetarCores();
+    PAUSA(TEMPO_PAUSA / 2);
     
-    printf("\nAguarde alguns momentos enquanto o modo se inicia...\n");
+    aplicarCorTexto(TEXTO_MAGENTA);
+    printf("\n- A sala atual de Teseu é marcada pela cor amarela, enquanto as salas já visitadas são marcadas pela cor verde.\n- Você deve guiar o herói dizendo uma das 4 direções (cima, baixo, esquerda ou direita) por vez.\n- Lembre-se: o herói não pode passar em uma sala do labirinto onde já esteve, pois há chances maiores dele se encontrar com os soldados!\n- Você tem 5 tentativas, no total, para adivinhar qual deverá ser a próxima sala que Teseu deve visitar, ou ele será alcançado pelos soldados.\n");
+    resetarCores();
+    aplicarCorFundo(FUNDO_MAGENTA);
+    printf("\nAguarde alguns momentos enquanto o modo se inicia...");
+    resetarCores();
+    printf("\n");
+
     bool existeCaminho = false;
     int x, y;
-
-    /*
     while(existeCaminho == false){
         x = rand() % m;
         y = rand() % n;
         if((matriz[x][y].conteudo == '0' || matriz[x][y].conteudo == 'C')){
-            int temp = 0, i = 0;
-            Posicao posicoes[(m * n) + 1];
-            existeCaminho = escolheCaminho(x, y, m, n, matriz, 0, &temp, posicoes, &i);
+            int temp1 = 0, temp2 = 0;
+            Posicao posicoes[n*m];
+            existeCaminho = escolheCaminho(x, y, m, n, matriz, 0, &temp1, posicoes, &temp2);
+            reiniciarVisitasLabirinto(m, n, matriz);
         }
     }
-    */
-    x = 0, y = 0;
 
     ListaCaminhos caminhos;
     inicializaCaminhos(&caminhos);
     int temp = 0, i = 0;
     Posicao posicoes[(m * n) + 1];
     encontraTodosCaminhos(x, y, m, n, matriz, 0, &temp, posicoes, &i, &caminhos);
-
-    aplicarCorTexto(TEXTO_MAGENTA);
-    printf("\n- A sala atual de Teseu é marcada pela cor amarela, enquanto as salas já visitadas são marcadas pela cor verde.\n- Você deve guiar o herói dizendo uma das 4 direções (cima, baixo, esquerda ou direita) por vez.\n- Lembre-se: o herói não pode passar em uma sala do labirinto onde já esteve, pois há chances maiores dele se encontrar com os soldados!\n- Você tem 5 tentativas, no total, para adivinhar qual deverá ser a próxima sala que Teseu deve visitar, ou ele será alcançado pelos soldados.\n");
-    resetarCores();
-    PAUSA(TEMPO_PAUSA);
 
     bool aindaPossuiTentativas = true;
     int numPassos = 1, tentativasRestantes = 5;
