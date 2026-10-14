@@ -16,11 +16,11 @@
 
 bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes){
     matriz[x][y].visitado = true;
+    posicoes[*iPosicoes].x = x;
+    posicoes[*iPosicoes].y = y;
+    (*iPosicoes)++;
     if(matriz[x][y].conteudo == 'X') {
-        if (qtChaves == *qtChavesEncontradas){
-            posicoes[*iPosicoes].x = x;
-            posicoes[*iPosicoes].y = y;
-            (*iPosicoes)++;
+        if(qtChaves <= *qtChavesEncontradas){
             return true;
         }
         matriz[x][y].visitado = false;
@@ -31,38 +31,27 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
     }
     if((x >= 0 && x < m && y - 1 >= 0 && y - 1 < n) && (matriz[x][y - 1].visitado == false) && matriz[x][y - 1].conteudo != '1'){
         if(escolheCaminho(x, y - 1, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
-            posicoes[*iPosicoes].x = x;
-            posicoes[*iPosicoes].y = y;
-            (*iPosicoes)++;
             return true;
         }
     }
     if((x >= 0 && x < m && y + 1 >= 0 && y + 1 < n) && (matriz[x][y + 1].visitado == false) && matriz[x][y + 1].conteudo != '1'){
         if(escolheCaminho(x, y + 1,m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
-            posicoes[*iPosicoes].x = x;
-            posicoes[*iPosicoes].y = y;
-            (*iPosicoes)++;
             return true;
         }
     }
     if((x + 1 >= 0 && x + 1 < m && y >= 0 && y < n) && (matriz[x + 1][y].visitado == false) && matriz[x + 1][y].conteudo != '1'){
         if(escolheCaminho(x + 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
-            posicoes[*iPosicoes].x = x;
-            posicoes[*iPosicoes].y = y;
-            (*iPosicoes)++;
             return true;
         }
     }
     if((x - 1>= 0 && x - 1 < m && y >= 0 && y < n) && (matriz[x - 1][y].visitado == false) && matriz[x - 1][y].conteudo != '1'){
         if(escolheCaminho(x - 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
-            posicoes[*iPosicoes].x = x;
-            posicoes[*iPosicoes].y = y;
-            (*iPosicoes)++;
             return true;
         }
     }
     if(matriz[x][y].conteudo == 'C') (*qtChavesEncontradas)--;
     matriz[x][y].visitado = false;
+    (*iPosicoes)--;
     return false;
 }
 
@@ -72,7 +61,7 @@ void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qt
     posicoes[*iPosicoes].y = y;
     (*iPosicoes)++;
     if(matriz[x][y].conteudo == 'X') {
-        if( qtChaves == *qtChavesEncontradas) {
+        if( qtChaves <= *qtChavesEncontradas) {
             insereCaminho(caminhosPossiveis, posicoes, *iPosicoes);
         }
     } 
@@ -102,34 +91,6 @@ void limparTela(void) {
     printf("\x1b[H\x1b[J");
 }
 
-/*void printaMatriz (int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas){
-    for (int i=0; i<m; i++){
-        for (int j=0; j<n; j++){
-            if (matriz[i][j].conteudo=='#'){
-                aplicarCorFundo(FUNDO_VERDE);
-                aplicarCorTexto(TEXTO_VERDE);
-            }
-            else if (matriz[i][j].conteudo == '1'){
-                aplicarCorFundo(FUNDO_AZUL);
-                aplicarCorTexto(TEXTO_AZUL);
-            }
-            if (matriz[i][j].conteudo == 'X' || matriz[i][j].conteudo == 'A'){
-                aplicarCorFundo(FUNDO_VERDE);
-                aplicarCorTexto(TEXTO_VERDE);   
-            }
-            printf("%c", matriz[i][j].conteudo);
-            resetarCores();
-            printf(" ");
-        }
-        if(i==(m/2)-2){
-            printf("        chaves necessarias: %d", qtdChaves);
-        }
-        if (i==(m/2)-1){
-            printf("        chaves encontradas: %d", qtdChavesEncontradas);
-        }
-        printf("\n");
-    }
-}*/
 void printaMatriz(int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas, int passoAtual, int totalPassos) {
 
     for (int i = 0; i < m; i++) {
@@ -180,7 +141,7 @@ void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPo
     int passo = 1;
     int totalPassos = iPosicoes - 2;
     int qtdChavesEncontradas = 0;
-    for (int i = iPosicoes-2; i>0; i--){
+    for (int i = 1; i < iPosicoes - 1; i++){
         limparTela();
         if (matriz[posicoes[i].x][posicoes[i].y].conteudo == 'C') qtdChavesEncontradas++;
         matriz[posicoes[i].x][posicoes[i].y].conteudo = '#';
@@ -263,7 +224,7 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     printf("\nTeseu encontrou o Minotauro e, em uma batalha feroz, abateu a fera. Porém, os urros mortais\ndo monstro ecoaram por toda a ilha. Descobrindo a traição de sua filha e a queda do guardião de Creta,\no Rei Minos tomou-se de fúria. Determinado a impedir que Teseu saia vivo, o rei ordenou que seus\nsoldados marchassem para o Labirinto, tomando as entradas e espalhando guardas pelas galerias para\ncaçar o herói.\n");
     PAUSA(TEMPO_PAUSA);
 
-    printf("\nDurante o combate brutal, o fio de ouro de Ariadne se rasgou e se perdeu na escuridão. Com as\npatrulhas de Minos se aproximando da entrada do Labirinto, Teseu não pode dar nenhum passo em\nfalso. Desorientado e sem margem para erros, o herói clama aos deuses por ajuda.\n");
+    printf("\nDurante o combate brutal contra o Minotauro, o fio de ouro de Ariadne se rasgou e se perdeu na escuridão. Com as\npatrulhas de Minos se aproximando da entrada do Labirinto, Teseu não pode dar nenhum passo em\nfalso. Desorientado e sem margem para erros, o herói clama aos deuses por ajuda.\n");
     PAUSA(TEMPO_PAUSA);
 
     printf("\nVocê é a manifestação da vontade divina! Guie Teseu até a saída do Labirinto, antes que os\nsoldados de Minos o alcancem!\n");
@@ -332,10 +293,16 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
                 printf("Essa não é a posição correta! Você tem %d tentativas restantes, no total.\n", tentativasRestantes);
             }
             else{
-                printf("Você não conseguiu ajudar Teseu! Os inimigos alcançaram-no e ele morreu cruelmente.\n");
+                printf("\nVocê não conseguiu ajudar Teseu! Os inimigos alcançaram-no e ele morreu cruelmente.\n\n");
                 aindaPossuiTentativas = false;
             }
             resetarCores();
         }
     }
+    if(aindaPossuiTentativas){
+        aplicarCorTexto(TEXTO_VERDE);
+        printf("\nParabéns! Teseu está a salvo graças à você! Um novo templo será erguido em sua homenagem.\n\n");
+        resetarCores();
+    }
+    liberaCaminhos(&caminhos);
 }

@@ -23,7 +23,7 @@ int main(){
     Sala matriz[linhas][colunas];
     Posicao posicaoInicial;
     Posicao posicoes[(linhas*colunas)+1];
-    int k = 0;
+  
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
             fscanf(arquivo, " %c", &(matriz[i][j].conteudo));
@@ -34,7 +34,6 @@ int main(){
             }
         }
     }
-    /*
     for (int i = 0; i <= (linhas * colunas); i++) {
         posicoes[i].x = -1;
         posicoes[i].y = -1;
@@ -51,8 +50,22 @@ int main(){
     }
     else{
         printf("não existe caminho possivel");
-    }
-    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves); */
+    } */
+    printCriativo(linhas, colunas, matriz, posicoes, iPosicoes, qtdChaves);
 
+    rewind(arquivo);
+    fscanf(arquivo, "%d %d", &linhas, &colunas);
+    fscanf(arquivo, "%d", &qtdChaves);
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            fscanf(arquivo, " %c", &(matriz[i][j].conteudo));
+            matriz[i][j].visitado = false;
+            if (matriz[i][j].conteudo == 'A'){
+                posicaoInicial.x = i;
+                posicaoInicial.y = j;
+            }
+        }
+    }
     modoHistoriaInterativo(linhas, colunas, matriz);
+    fclose(arquivo);
 }
