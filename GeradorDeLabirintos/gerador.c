@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "gerador.h"
+#include "../Cores/cores.h"
 
 
 //formato de peças
@@ -36,9 +37,7 @@ void inicializador(char **matriz, int x, int y){
 char** gerador(int x, int y, int peca, int chave){
 
     char** matriz = criador(x,y); //// cria os espaços da matriz que o usuário digitou
-    
-    srand(time(NULL));
-     
+         
 
 
     int matriz_valida = 0; //// enquanto os valores não não servirem na criação, é possível reeditar os parâmetros, para que o labirinto torne-se válido
@@ -174,7 +173,7 @@ char** gerador(int x, int y, int peca, int chave){
         if(matriz_valida == 0){
             printf("Digite para qual fator voce deseja diminuir a quantidade para tornar o labirinto valido: \n");
             printf("1. Quantidade de pecas\n");
-            printf("2. Quantidade de chaves\n\n");
+            printf("2. Quantidade de chaves\n");
             int input_valido = 0;
             int escolha;
             while(input_valido == 0){
@@ -191,7 +190,7 @@ char** gerador(int x, int y, int peca, int chave){
             int diminuir;
             switch(escolha){
                 case 1:
-                    printf("Quanto voce deseja diminuir ? ");
+                    printf("Quanto voce deseja diminuir? ");
                     while(input_valido == 0){
                         scanf("%d", &diminuir);
                         if(peca - diminuir > 0){
@@ -202,7 +201,7 @@ char** gerador(int x, int y, int peca, int chave){
                     break;
                 
                 case 2:
-                    printf("Quanto voce deseja diminuir ? ");
+                    printf("Quanto voce deseja diminuir? ");
                     while(input_valido == 0){
                         scanf("%d", &diminuir);
                         if(chave - diminuir > 0){
@@ -220,5 +219,32 @@ char** gerador(int x, int y, int peca, int chave){
 
 }
 
+void printaMatrizGerador(int m, int n, char **matriz) {
+    printf("\n");
+    for (int i = 0; i < m; i++) {
+        printf("│ "); // Borda esquerda
+        for (int j = 0; j < n; j++) {
+            // Renderização customizada por elemento
+            if (matriz[i][j] == 'C') {
+                aplicarCorTexto(TEXTO_AMARELO);
+                printf("C ");
+            } else if (matriz[i][j] == '1') {
+                aplicarCorFundo(FUNDO_AZUL);
+                printf("  ");
+            } else if (matriz[i][j] == 'X' || matriz[i][j] == 'A') {
+                aplicarCorFundo(FUNDO_MAGENTA);
+                aplicarCorTexto(TEXTO_MAGENTA);
+                printf("%c ", matriz[i][j]);
+            } else {
+                printf("%c ", matriz[i][j]);
+            }
+            resetarCores();
+        }
+        
+        printf("│"); // Borda direita do labirinto
+        printf("\n");
+    }
+    printf("\n");
+}
 
 

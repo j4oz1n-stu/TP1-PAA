@@ -1,8 +1,17 @@
 #include "historia.h"
 #include "../Cores/cores.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include <string.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+    #define PAUSA(ms) Sleep(ms) 
+#else
+    #include <unistd.h>
+    #define PAUSA(ms) usleep((ms)*1000)   
+#endif
 
 void printaMatrizHistoria(int m, int n, Sala matriz[m][n]) {
     printf("\n");

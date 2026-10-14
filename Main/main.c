@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "../Labirinto/labirinto.h"
 #include "../GeradorDeLabirintos/gerador.h"
+#include "../ModoHistoria/historia.h"
 
 int main(){
     srand(time(NULL));
@@ -62,12 +63,28 @@ int main(){
             case 1: {
                 int iPosicoes = 0;
                 int qtdChavesEncontradas = 0;
-                escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes);
                 if (escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
-                    for(int i = 0; i < iPosicoes; i++){
-                        printf("[%d, %d]", posicoes[i].x, posicoes[i].y);
+
+                    //duplica a matriz porque printCriativo modifica ela
+                    Sala matriz2[linhas][colunas];
+                    for(int i = 0; i < linhas; i++){
+                        for(int j = 0; j < colunas; j++){
+                            matriz2[i][j].conteudo = matriz[i][j].conteudo;
+                            matriz2[i][j].visitado = false;
+                        }
                     }
-                    printf("[%d, %d]\n", posicoes[0].x, posicoes[0].y);
+                    printCriativo(linhas, colunas, matriz2, posicoes, iPosicoes, qtdChaves);
+                    for(int i = 0; i < iPosicoes; i++){
+                        printf("[%d, %d] ", posicoes[i].x, posicoes[i].y);
+                    }
+                    printf("\n");
+
+                    //reinicia o visitados da matriz, por conta de outras funções
+                    for(int i = 0; i < linhas; i++){
+                        for(int j = 0; j < colunas; j++){
+                            matriz[i][j].visitado = false;
+                        }
+                    }
                 }
                 else{
                     printf("Não existe caminho possivel!\n");
@@ -75,19 +92,66 @@ int main(){
                 break;
             }
             case 2: {
-
+                int iPosicoes = 0;
+                int qtdChavesEncontradas = 0;
+                ListaCaminhos caminhos;
+                inicializaCaminhos(&caminhos);
+                encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos);
+                imprimeCaminhos(caminhos);
                 break;
             }
             case 3: {
+                int iPosicoes = 0;
+                int qtdChavesEncontradas = 0;
+                if (Cobrinha(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
 
+                    //duplica a matriz porque printCriativo modifica ela
+                    Sala matriz2[linhas][colunas];
+                    for(int i = 0; i < linhas; i++){
+                        for(int j = 0; j < colunas; j++){
+                            matriz2[i][j].conteudo = matriz[i][j].conteudo;
+                            matriz2[i][j].visitado = false;
+                        }
+                    }
+                    printCriativo(linhas, colunas, matriz2, posicoes, iPosicoes, qtdChaves);
+                    for(int i = 0; i < iPosicoes; i++){
+                        printf("[%d, %d] ", posicoes[i].x, posicoes[i].y);
+                    }
+                    printf("\n");
+
+                    //reinicia o visitados da matriz, por conta de outras funções
+                    for(int i = 0; i < linhas; i++){
+                        for(int j = 0; j < colunas; j++){
+                            matriz[i][j].visitado = false;
+                        }
+                    }
+                }
+                else{
+                    printf("Não existe caminho possivel!\n");
+                }
                 break;
             }
             case 4: {
-                
+                modoHistoriaInterativo(linhas, colunas, matriz);
                 break;
             }
             case 5: {
-                
+                int m, n, pecas, chaves;
+                printf("Digite o número de linhas e colunas do labirinto, nessa ordem: ");
+                scanf("%d %d", &m, &n);
+                printf("Digite o número de peças de paredes do labirinto: ");
+                scanf("%d", &pecas);
+                printf("Digite o número de chaves do labirinto: ");
+                scanf("%d", &chaves);
+                char **mtr = gerador(m, n, pecas, chaves);
+                printf("\n");
+                for(int i = 0; i < m; i++){
+                    for(int j = 0; j < n; j++){
+                        printf("%c ", mtr[i][j]);
+                    }
+                    printf("\n");
+                }
+                printaMatrizGerador(m, n, mtr);
                 break;
             }
             default:
