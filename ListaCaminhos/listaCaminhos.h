@@ -1,6 +1,5 @@
-#ifndef CAMINHOS_H
-#define CAMINHOS_H
-
+#ifndef LISTACAMINHOS_H
+#define LISTACAMINHOS_H
 
 typedef struct NoCaminho {
     Posicao *vetorCaminho;
@@ -12,7 +11,6 @@ typedef struct {
     NoCaminho *inicio, *final;
     int qtdCaminhos;
 } ListaCaminhos;
-
 
 void inicializaCaminhos(ListaCaminhos *lista);
 bool caminhosVazios(ListaCaminhos lista);

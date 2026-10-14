@@ -1,5 +1,5 @@
-#ifndef CRIADOR_H
-#define CRIADOR_H
+#ifndef GERADOR_H
+#define GERADOR_H
 
 
 

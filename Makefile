@@ -1,4 +1,4 @@
 all:
-	gcc Main/main.c Labirinto/labirinto.c Caminhos/caminhos.c Cores/cores.c -o Main/main -g
+	gcc Main/main.c Labirinto/labirinto.c ModoHistoria/historia.h GeradorDeLabirintos/gerador.c ListaCaminhos/listaCaminhos.c Cores/cores.c -o Main/main -g
 run:
 	./Main/main

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "criador.h"
+#include "gerador.h"
 
 
 //formato de peças
