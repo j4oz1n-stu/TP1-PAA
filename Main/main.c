@@ -44,6 +44,7 @@ int main(){
         posicoes[i].x = -1;
         posicoes[i].y = -1;
     }
+    fclose(arquivo);
 
     while(true){
         printf("\n=========================================\n");
@@ -78,16 +79,15 @@ int main(){
                         printf("[%d, %d] ", posicoes[i].x, posicoes[i].y);
                     }
                     printf("\n");
-
-                    //reinicia o visitados da matriz, por conta de outras funções
-                    for(int i = 0; i < linhas; i++){
-                        for(int j = 0; j < colunas; j++){
-                            matriz[i][j].visitado = false;
-                        }
-                    }
                 }
                 else{
                     printf("Não existe caminho possivel!\n");
+                }
+                //reinicia o visitados da matriz, por conta de outras funções
+                for(int i = 0; i < linhas; i++){
+                    for(int j = 0; j < colunas; j++){
+                        matriz[i][j].visitado = false;
+                    }
                 }
                 break;
             }
@@ -118,16 +118,15 @@ int main(){
                         printf("[%d, %d] ", posicoes[i].x, posicoes[i].y);
                     }
                     printf("\n");
-
-                    //reinicia o visitados da matriz, por conta de outras funções
-                    for(int i = 0; i < linhas; i++){
-                        for(int j = 0; j < colunas; j++){
-                            matriz[i][j].visitado = false;
-                        }
-                    }
                 }
                 else{
                     printf("Não existe caminho possivel!\n");
+                }
+                //reinicia o visitados da matriz, por conta de outras funções
+                for(int i = 0; i < linhas; i++){
+                    for(int j = 0; j < colunas; j++){
+                        matriz[i][j].visitado = false;
+                    }
                 }
                 break;
             }
@@ -143,15 +142,7 @@ int main(){
                 scanf("%d", &pecas);
                 printf("Digite o número de chaves do labirinto: ");
                 scanf("%d", &chaves);
-                char **mtr = gerador(m, n, pecas, chaves);
-                printf("\n");
-                for(int i = 0; i < m; i++){
-                    for(int j = 0; j < n; j++){
-                        printf("%c ", mtr[i][j]);
-                    }
-                    printf("\n");
-                }
-                printaMatrizGerador(m, n, mtr);
+                gerador(m, n, pecas, chaves);
                 break;
             }
             default:

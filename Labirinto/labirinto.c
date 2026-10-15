@@ -21,6 +21,7 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
             return true;
         }
         matriz[x][y].visitado = false;
+        (*iPosicoes)--;
         return false;
     }
     if(matriz[x][y].conteudo == 'C'){
@@ -155,8 +156,13 @@ bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *
     posicoes[*iPosicoes].x = x;
     posicoes[*iPosicoes].y = y;
     (*iPosicoes)++;
-    if(matriz[x][y].conteudo == 'X' && qtChaves == *qtChavesEncontradas){
-        return true;
+    if(matriz[x][y].conteudo == 'X'){
+        if(qtChaves <= *qtChavesEncontradas){
+            return true;
+        }
+        matriz[x][y].visitado = false;
+        (*iPosicoes)--;
+        return false;
     }
     if(matriz[x][y].conteudo == 'C'){
         (*qtChavesEncontradas)++;
