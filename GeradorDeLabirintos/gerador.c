@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "criador.h"
+#include "gerador.h"
+#include "../Cores/cores.h"
 
 
 //formato de peças
@@ -32,6 +33,33 @@ void inicializador(char **matriz, int x, int y){
     }
 }
 
+static void printaMatrizGerador(int m, int n, char **matriz) {
+    printf("\n");
+    for (int i = 0; i < m; i++) {
+        printf("│ "); // Borda esquerda
+        for (int j = 0; j < n; j++) {
+            // Renderização customizada por elemento
+            if (matriz[i][j] == 'C') {
+                aplicarCorTexto(TEXTO_AMARELO);
+                printf("C ");
+            } else if (matriz[i][j] == '1') {
+                aplicarCorFundo(FUNDO_AZUL);
+                printf("  ");
+            } else if (matriz[i][j] == 'X' || matriz[i][j] == 'A') {
+                aplicarCorFundo(FUNDO_MAGENTA);
+                aplicarCorTexto(TEXTO_MAGENTA);
+                printf("%c ", matriz[i][j]);
+            } else {
+                printf("%c ", matriz[i][j]);
+            }
+            resetarCores();
+        }
+        
+        printf("│"); // Borda direita do labirinto
+        printf("\n");
+    }
+    printf("\n");
+}
 
 void gerador(int x, int y, int peca, int chave){
 
@@ -267,6 +295,9 @@ void gerador(int x, int y, int peca, int chave){
     if(abre == 1){
         printf("Como não foi possivel escrever, nao foi possivel gerar a matriz. Tente novamente !\n");
     }
+    else{
+        printaMatrizGerador(x, y, matriz);
+    }
 }
 
 int escritor(char **matriz, int x, int y, int chave){
@@ -278,7 +309,7 @@ int escritor(char **matriz, int x, int y, int chave){
         printf("\n");
     }
 
-    FILE *arquivo = fopen("../Testes/teste.txt", "w");
+    FILE *arquivo = fopen("Testes/teste.txt", "w");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");

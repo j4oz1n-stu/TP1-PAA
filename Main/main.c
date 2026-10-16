@@ -98,6 +98,36 @@ int main(){
                 inicializaCaminhos(&caminhos);
                 encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos);
                 imprimeCaminhos(caminhos);
+                printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
+                char escolha;
+                getchar();
+                scanf("%c", &escolha);
+                if(escolha == 'S'){
+                    int num;
+                    printf("Digite o número do caminho: ");
+                    scanf("%d", &num);
+                    //duplica a matriz porque printCriativo modifica ela
+                    Sala matriz2[linhas][colunas];
+                    for(int i = 0; i < linhas; i++){
+                        for(int j = 0; j < colunas; j++){
+                            matriz2[i][j].conteudo = matriz[i][j].conteudo;
+                            matriz2[i][j].visitado = false;
+                        }
+                    }
+                    NoCaminho* aux = caminhos.inicio->prox; 
+                    int contador = 1; 
+                    while(aux != NULL && contador != num) {
+                        aux = aux->prox;
+                        contador++;
+                    }
+                    printCriativo(linhas, colunas, matriz2, aux->vetorCaminho, aux->tamanhoCaminho, qtdChaves);
+                }
+                //reinicia o visitados da matriz, por conta de outras funções
+                for(int i = 0; i < linhas; i++){
+                    for(int j = 0; j < colunas; j++){
+                        matriz[i][j].visitado = false;
+                    }
+                }
                 break;
             }
             case 3: {
