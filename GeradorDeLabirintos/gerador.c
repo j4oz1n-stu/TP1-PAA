@@ -83,85 +83,98 @@ void gerador(int x, int y, int peca, int chave){
         while(peca > contador_peca){
 
             matriz_valida = 1;
+        
+            int formato = (rand() % 4) + 1;
+            flag_p = 0;
+            count = 0;
 
-            if(count > 50){
-                printf("Nao foi possivel posicionar mais paredes\n");
-                printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
-                matriz_valida = 0;
+            while(flag_p == 0){
+                if(formato == 1){
+                    if(count > 50){
+                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
+                        matriz_valida = 0;
+                        break;
+                    }
+                            peca_x = rand() % x;
+                            peca_y = rand() % y;
+                            if (matriz[peca_x][peca_y] == '0'){
+                                matriz[peca_x][peca_y] = '1';
+                                flag_p = 1;
+                                contador_peca++;
+                            }
+                            else{
+                                count++;
+                            }
+                        }
+
+                else if(formato == 2){
+                    if(count > 50){
+                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
+                        matriz_valida = 0;
+                        break;
+                    }
+                            peca_x = rand() % (x - 1);
+                            peca_y = rand() % y;
+                            if (matriz[peca_x][peca_y] == '0' && matriz[peca_x + 1][peca_y] == '0'){
+                                matriz[peca_x][peca_y] = '1';
+                                matriz[peca_x + 1][peca_y] = '1';
+                                flag_p = 1;
+                                contador_peca++;
+                            }
+                            else{
+                                count++;
+                            }                                
+                }
+
+                else if(formato == 3){
+                    if(count > 50){
+                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
+                        matriz_valida = 0;
+                        break;
+                    }
+                            peca_x = rand() % x;
+                            peca_y = rand() % (y - 1);
+                            if (matriz[peca_x][peca_y] == '0' && matriz[peca_x][peca_y + 1] == '0'){
+                                matriz[peca_x][peca_y] = '1';
+                                matriz[peca_x][peca_y + 1] = '1';
+                                flag_p = 1;
+                                contador_peca++;
+                            }
+                            else{
+                                count++;
+                            }
+                }
+
+                else if(formato == 4){
+                    if(count > 50){
+                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
+                        matriz_valida = 0;
+                        break;
+                    }
+                            peca_x = rand() % (x - 1);
+                            peca_y = rand() % (y - 1);
+                            if (matriz[peca_x][peca_y] == '0' && matriz[peca_x + 1][peca_y + 1] == '0'){
+                                matriz[peca_x][peca_y] = '1';
+                                matriz[peca_x + 1][peca_y + 1] = '1';
+                                flag_p = 1;
+                                contador_peca++;
+                            }
+                            else{
+                                count++;
+                            }
+                    }
+            }
+
+            if(matriz_valida == 0){
                 break;
             }
 
 
-        
-            int formato = (rand() % 3) + 1;
-
-            switch(formato){
-                count = 0;
-                while(flag_p == 0){
-                    case 1:
-                        peca_x = rand() % x;
-                        peca_y = rand() % y;
-                        if (matriz[peca_x][peca_y] == '0'){
-                            matriz[peca_x][peca_y] = '1';
-                            flag_p = 1;
-                        }
-                        else{
-                            count++;
-                        }
-                        contador_peca++;
-                    
-                    break;
-
-                    case 2:
-                        peca_x = rand() % (x - 1);
-                        peca_y = rand() % y;
-                        if (matriz[peca_x][peca_y] == '0' && matriz[peca_x + 1][peca_y] == '0'){
-                            matriz[peca_x][peca_y] = '1';
-                            matriz[peca_x + 1][peca_y] = '1';
-                            flag_p = 1;
-                        }
-                        else{
-                            count++;
-                        }                                
-                        contador_peca++;
-
-                    break;
-
-                    case 3:
-                        peca_x = rand() % x;
-                        peca_y = rand() % (y - 1);
-                        if (matriz[peca_x][peca_y] == '0' && matriz[peca_x][peca_y + 1] == '0'){
-                            matriz[peca_x][peca_y] = '1';
-                            matriz[peca_x][peca_y + 1] = '1';
-                            flag_p = 1;
-                        }
-                        else{
-                            count++;
-                        }
-                        contador_peca++;
-
-                    break;
-
-                    case 4:
-                        peca_x = rand() % (x - 1);
-                        peca_y = rand() % (y - 1);
-                        if (matriz[peca_x][peca_y] == '0' && matriz[peca_x + 1][peca_y + 1] == '0'){
-                            matriz[peca_x][peca_y] = '1';
-                            matriz[peca_x + 1][peca_y + 1] = '1';
-                            flag_p = 1;
-                        }
-                        else{
-                            count++;
-                        }
-                        contador_peca++;
-
-                    break;
-                }
-            }
-
-
         }
-
 
         count = 0;
         ///int chave colocará as chaves para o baú
