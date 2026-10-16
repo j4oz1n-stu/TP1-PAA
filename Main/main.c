@@ -128,7 +128,7 @@ int main(){
                 inicializaCaminhos(&caminhos);
                 encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos);
                 imprimeCaminhos(caminhos);
-                if(caminhos.qtdCaminhos > 0){
+                if(caminhos.qtdCaminhos > 1){
                     printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
                     char escolha;
                     getchar();

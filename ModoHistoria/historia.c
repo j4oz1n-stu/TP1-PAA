@@ -84,7 +84,7 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     int TEMPO_PAUSA = 12000;
     aplicarCorTexto(TEXTO_AMARELO);
 
-    printf("\nApós a morte trágica de seu filho em solo ateniense, o poderoso Rei Minos de Creta declarou\nguerra a Atenas e impôs um tributo devastador: a cada nove anos, sete rapazes e sete moças atenienses\ndeviam ser entregues para alimentar o Minotauro, uma fera brutal aprisionada nas profundezas do\nLabirinto, uma super estrutura repleta de salas.\n");
+    printf("\nApós a morte trágica de seu filho em solo ateniense, o poderoso Rei Minos de Creta declarou\nguerra a Atenas e impôs um tributo devastador: a cada sete anos, sete rapazes e sete moças atenienses\ndeviam ser entregues para alimentar o Minotauro, uma fera brutal aprisionada nas profundezas do\nLabirinto, uma super estrutura repleta de salas.\n");
     PAUSA(TEMPO_PAUSA);
 
     printf("\nIndignado com a tirania de Creta, o jovem príncipe Teseu ofereceu-se como tributo, jurando\nlibertar seu povo. Ao desembarcar na ilha, sua coragem conquistou o coração da princesa Ariadne, filha\nde Minos. Sabendo que o Labirinto era uma sentença de morte, Ariadne traiu seu próprio pai:\nentregou a Teseu uma espada e um novelo de fio de ouro para guiar seus passos na escuridão.\n");
@@ -109,8 +109,9 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     printf("\n");
 
     bool existeCaminho = false;
+    int countIteracoes = 0;
     int x, y;
-    while(existeCaminho == false){
+    while(existeCaminho == false && countIteracoes < 500){
         x = rand() % m;
         y = rand() % n;
         if((matriz[x][y].conteudo == '0' || matriz[x][y].conteudo == 'C')){
@@ -119,6 +120,11 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
             existeCaminho = escolheCaminho(x, y, m, n, matriz, 0, &temp1, posicoes, &temp2);
             reiniciarVisitasLabirinto(m, n, matriz);
         }
+    }
+
+    if(existeCaminho == false){
+        printf("Não foi possível iniciar o modo história nesse labirinto. Tente novamente com outro mapa! \n");
+        return;
     }
 
     ListaCaminhos caminhos;
