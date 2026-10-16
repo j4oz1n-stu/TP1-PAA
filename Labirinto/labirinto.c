@@ -11,7 +11,7 @@
     #define PAUSA(ms) usleep((ms)*1000)   
 #endif
 
-bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes){
+bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes,int *chamadasRecursivas){
     matriz[x][y].visitado = true;
     posicoes[*iPosicoes].x = x;
     posicoes[*iPosicoes].y = y;
@@ -28,22 +28,26 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
         (*qtChavesEncontradas)++;
     }
     if((x >= 0 && x < m && y - 1 >= 0 && y - 1 < n) && (matriz[x][y - 1].visitado == false) && matriz[x][y - 1].conteudo != '1'){
-        if(escolheCaminho(x, y - 1, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(escolheCaminho(x, y - 1, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((x >= 0 && x < m && y + 1 >= 0 && y + 1 < n) && (matriz[x][y + 1].visitado == false) && matriz[x][y + 1].conteudo != '1'){
-        if(escolheCaminho(x, y + 1,m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(escolheCaminho(x, y + 1,m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((x + 1 >= 0 && x + 1 < m && y >= 0 && y < n) && (matriz[x + 1][y].visitado == false) && matriz[x + 1][y].conteudo != '1'){
-        if(escolheCaminho(x + 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(escolheCaminho(x + 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((x - 1>= 0 && x - 1 < m && y >= 0 && y < n) && (matriz[x - 1][y].visitado == false) && matriz[x - 1][y].conteudo != '1'){
-        if(escolheCaminho(x - 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(escolheCaminho(x - 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
@@ -53,7 +57,7 @@ bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves,
     return false;
 }
 
-void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, ListaCaminhos *caminhosPossiveis){
+void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, ListaCaminhos *caminhosPossiveis,int *chamadasRecursivas){
     matriz[x][y].visitado = true;
     posicoes[*iPosicoes].x = x;
     posicoes[*iPosicoes].y = y;
@@ -68,16 +72,20 @@ void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qt
             (*qtChavesEncontradas)++;
         }
         if((x >= 0 && x < m && y - 1 >= 0 && y - 1 < n) && (matriz[x][y - 1].visitado == false) && matriz[x][y - 1].conteudo != '1'){
-            encontraTodosCaminhos(x, y - 1, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis);
+            (*chamadasRecursivas)++;
+            encontraTodosCaminhos(x, y - 1, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis, chamadasRecursivas);
         }
         if((x >= 0 && x < m && y + 1 >= 0 && y + 1 < n) && (matriz[x][y + 1].visitado == false) && matriz[x][y + 1].conteudo != '1'){
-            encontraTodosCaminhos(x, y + 1,m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis);
+            (*chamadasRecursivas)++;
+            encontraTodosCaminhos(x, y + 1,m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis, chamadasRecursivas);
         }
         if((x + 1 >= 0 && x + 1 < m && y >= 0 && y < n) && (matriz[x + 1][y].visitado == false) && matriz[x + 1][y].conteudo != '1'){
-            encontraTodosCaminhos(x + 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis);
+            (*chamadasRecursivas)++;
+            encontraTodosCaminhos(x + 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis, chamadasRecursivas);
         }
         if((x - 1>= 0 && x - 1 < m && y >= 0 && y < n) && (matriz[x - 1][y].visitado == false) && matriz[x - 1][y].conteudo != '1'){
-            encontraTodosCaminhos(x - 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis);
+            (*chamadasRecursivas)++;
+            encontraTodosCaminhos(x - 1, y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, caminhosPossiveis, chamadasRecursivas);
         }
     }
     if(matriz[x][y].conteudo == 'C') (*qtChavesEncontradas)--;
@@ -151,7 +159,7 @@ void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPo
 }
 
 //so tem que mudar pra funcao deixar ultrapassar a parede e mudar a
-bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes){
+bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes,int *chamadasRecursivas){
     matriz[x][y].visitado = true;
     posicoes[*iPosicoes].x = x;
     posicoes[*iPosicoes].y = y;
@@ -168,22 +176,26 @@ bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *
         (*qtChavesEncontradas)++;
     }
     if((matriz[x][(y - 1 + n)% n].visitado == false) && matriz[x][(y - 1 + n)% n].conteudo != '1'){
-        if(Cobrinha(x, ((y - 1 + n)% n), m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(Cobrinha(x, ((y - 1 + n)% n), m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((matriz[x][(y + 1 + n)% n].visitado == false) && matriz[x][(y + 1 + n)% n].conteudo != '1'){
-        if(Cobrinha(x, ((y + 1 + n)% n),m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(Cobrinha(x, ((y + 1 + n)% n),m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((matriz[(x + 1 + m)% m][y].visitado == false) && matriz[(x + 1 + m)% m][y].conteudo != '1'){
-        if(Cobrinha(((x + 1 + m)% m), y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(Cobrinha(((x + 1 + m)% m), y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }
     if((matriz[(x - 1 + m)% m][y].visitado == false) && matriz[(x - 1 + m)% m][y].conteudo != '1'){
-        if(Cobrinha(((x - 1 + m)% m), y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes)){
+        (*chamadasRecursivas)++;
+        if(Cobrinha(((x - 1 + m)% m), y, m, n, matriz, qtChaves, qtChavesEncontradas, posicoes, iPosicoes, chamadasRecursivas)){
             return true;
         }
     }

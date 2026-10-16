@@ -79,6 +79,7 @@ int main(){
     fclose(arquivo);
 
     while(true){
+        int chamadasRecursivas = 0;
         printf("\n=========================================\n");
         printf("ANÁLISE DE  LABIRINTOS\n");
         printf("=========================================\n");
@@ -94,7 +95,11 @@ int main(){
             case 1: {
                 int iPosicoes = 0;
                 int qtdChavesEncontradas = 0;
-                if (escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
+                clock_t inicio = clock();
+                bool encontrada = escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas);
+                clock_t fim = clock();
+                double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
+                if (encontrada){
 
                     //duplica a matriz porque printCriativo modifica ela
                     Sala matriz2[linhas][colunas];
@@ -113,6 +118,8 @@ int main(){
                 else{
                     printf("Não existe caminho possivel!\n");
                 }
+                printf("Chamadas recursivas: %d\n", chamadasRecursivas);
+                printf("Tempo de execução: %.6f segundos\n", tempo);
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
                     for(int j = 0; j < colunas; j++){
@@ -126,8 +133,14 @@ int main(){
                 int qtdChavesEncontradas = 0;
                 ListaCaminhos caminhos;
                 inicializaCaminhos(&caminhos);
-                encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos);
+                //medicao de tempo
+                clock_t inicio = clock();
+                encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos, &chamadasRecursivas);
+                clock_t fim = clock();
+                double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
                 imprimeCaminhos(caminhos);
+                printf("Chamadas recursivas: %d\n", chamadasRecursivas);
+                printf("Tempo de execução: %.6f segundos\n", tempo);
                 if(caminhos.qtdCaminhos > 1){
                     printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
                     char escolha;
@@ -153,6 +166,7 @@ int main(){
                         }
                         printCriativo(linhas, colunas, matriz2, aux->vetorCaminho, aux->tamanhoCaminho, qtdChaves);
                     }
+                    
                 }
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
@@ -165,7 +179,11 @@ int main(){
             case 3: {
                 int iPosicoes = 0;
                 int qtdChavesEncontradas = 0;
-                if (Cobrinha(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes)){
+                clock_t inicio = clock();
+                bool encontrado =Cobrinha(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas);
+                clock_t fim = clock();
+                double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
+                if (encontrado){
 
                     //duplica a matriz porque printCriativo modifica ela
                     Sala matriz2[linhas][colunas];
@@ -184,6 +202,8 @@ int main(){
                 else{
                     printf("Não existe caminho possivel!\n");
                 }
+                printf("Chamadas recursivas: %d\n", chamadasRecursivas);
+                printf("Tempo de execução: %.6f segundos\n", tempo);
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
                     for(int j = 0; j < colunas; j++){
