@@ -33,7 +33,7 @@ void inicializador(char **matriz, int x, int y){
     }
 }
 
-static void printaMatrizGerador(int m, int n, char **matriz) {
+void printaMatrizGerador(int m, int n, char **matriz) {
     printf("\n");
     for (int i = 0; i < m; i++) {
         printf("│ "); // Borda esquerda
@@ -91,7 +91,7 @@ void gerador(int x, int y, int peca, int chave){
             while(flag_p == 0){
                 if(formato == 1){
                     if(count > 50){
-                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Nao foi possivel posicionar mais paredes.\n");
                         printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
                         matriz_valida = 0;
                         break;
@@ -110,7 +110,7 @@ void gerador(int x, int y, int peca, int chave){
 
                 else if(formato == 2){
                     if(count > 50){
-                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Nao foi possivel posicionar mais paredes.\n");
                         printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
                         matriz_valida = 0;
                         break;
@@ -130,7 +130,7 @@ void gerador(int x, int y, int peca, int chave){
 
                 else if(formato == 3){
                     if(count > 50){
-                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Nao foi possivel posicionar mais paredes.\n");
                         printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
                         matriz_valida = 0;
                         break;
@@ -150,7 +150,7 @@ void gerador(int x, int y, int peca, int chave){
 
                 else if(formato == 4){
                     if(count > 50){
-                        printf("Nao foi possivel posicionar mais paredes\n");
+                        printf("Nao foi possivel posicionar mais paredes.\n");
                         printf("Disparidade-> pecas desejadas(%d); pecas colocadas(%d)\n", peca, contador_peca);
                         matriz_valida = 0;
                         break;
@@ -185,7 +185,7 @@ void gerador(int x, int y, int peca, int chave){
             while(flag_c == 0){
 
                 if(count > 50){
-                printf("Nao foi possivel colocar mais chaves");
+                printf("Nao foi possivel colocar mais chaves.\n");
                 printf("Disparidade-> chaves desejadas(%d); chaves colocadas(%d)\n", chave, contador_chave);
                     matriz_valida = 0;
                     break;
@@ -219,7 +219,7 @@ void gerador(int x, int y, int peca, int chave){
         while(flag_b == 0){
 
             if(count > 50){
-                printf("Nao foi possivel colocar bau");
+                printf("Nao foi possivel colocar bau.\n");
                 matriz_valida = 0;
                 break;
             }
@@ -240,7 +240,7 @@ void gerador(int x, int y, int peca, int chave){
         while(flag_a == 0){
 
             if(count > 50){
-                printf("Nao foi possivel colocar entrada");
+                printf("Nao foi possivel colocar entrada.\n");
                 matriz_valida = 0;
                 break;
             }
@@ -261,7 +261,7 @@ void gerador(int x, int y, int peca, int chave){
         if(matriz_valida == 0){
             printf("Digite para qual fator voce deseja diminuir a quantidade para tornar o labirinto valido: \n");
             printf("1. Quantidade de pecas\n");
-            printf("2. Quantidade de chaves\n\n");
+            printf("2. Quantidade de chaves\n");
             int input_valido = 0;
             int escolha;
             while(input_valido == 0){
@@ -278,7 +278,7 @@ void gerador(int x, int y, int peca, int chave){
             int diminuir;
             switch(escolha){
                 case 1:
-                    printf("Quanto voce deseja diminuir ? ");
+                    printf("Quanto voce deseja diminuir? ");
                     while(input_valido == 0){
                         scanf("%d", &diminuir);
                         if(peca - diminuir > 0){
@@ -289,7 +289,7 @@ void gerador(int x, int y, int peca, int chave){
                     break;
                 
                 case 2:
-                    printf("Quanto voce deseja diminuir ? ");
+                    printf("Quanto voce deseja diminuir? ");
                     while(input_valido == 0){
                         scanf("%d", &diminuir);
                         if(chave - diminuir > 0){
@@ -306,23 +306,24 @@ void gerador(int x, int y, int peca, int chave){
     ///Agora que todos os valores da matriz são válidos, é hora de colocar no arquivo teste
     int abre = escritor(matriz,x,y,chave);
     if(abre == 1){
-        printf("Como não foi possivel escrever, nao foi possivel gerar a matriz. Tente novamente !\n");
+        printf("Não foi possível escrever no arquivo de saída. Tente novamente!\n");
     }
     else{
         printaMatrizGerador(x, y, matriz);
+        printf("O labirinto gerado foi salvo no arquivo 'Testes/gerado.txt'\n");
     }
 }
 
 int escritor(char **matriz, int x, int y, int chave){
 
-    for (int i = 0; i < x; i++) {
+    /*for (int i = 0; i < x; i++) {
         for (int j = 0; j < y; j++) {
             printf("%c ", matriz[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
-    FILE *arquivo = fopen("Testes/teste.txt", "w");
+    FILE *arquivo = fopen("Testes/gerado.txt", "w");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");

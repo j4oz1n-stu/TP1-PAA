@@ -8,16 +8,48 @@
 
 int main(){
     srand(time(NULL));
+    FILE* arquivo;
     printf("\n=========================================\n");
     printf("ANÁLISE DE  LABIRINTOS\n");
     printf("=========================================\n");
-    printf("Digite o caminho do arquivo que contém o labirinto:\n");
-    char caminho [100];
-    scanf("%s", caminho);
-    FILE* arquivo = fopen(caminho, "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo\n");
-        return 1;
+    printf("1 - Ler arquivo de entrada com o labirinto\n");
+    printf("2 - Gerador de labirintos\n");
+    int escolha;
+    printf("Digite a opção: ");
+    scanf("%d", &escolha);
+    switch (escolha){
+    case 1:
+        printf("Digite o caminho do arquivo que contém o labirinto: ");
+        char caminho [100];
+        scanf("%s", caminho);
+        arquivo = fopen(caminho, "r");
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo\n");
+            return 1;
+        }
+        break;
+    case 2:
+        int m, n, pecas, chaves;
+        printf("Digite o número de linhas e colunas do labirinto, nessa ordem: ");
+        scanf("%d %d", &m, &n);
+        printf("Digite o número de peças de paredes do labirinto: ");
+        scanf("%d", &pecas);
+        printf("Digite o número de chaves do labirinto: ");
+        scanf("%d", &chaves);
+        gerador(m, n, pecas, chaves);
+
+        printf("Digite o caminho do arquivo que contém o labirinto a ser carregado: ");
+        caminho [100];
+        scanf("%s", caminho);
+        arquivo = fopen(caminho, "r");
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo\n");
+            return 1;
+        }
+        break;
+    
+    default:
+        break;
     }
 
     //instanciar a matriz e ler o arquivo
@@ -54,11 +86,9 @@ int main(){
         printf("2 - Encontrar todos os caminhos válidos\n");
         printf("3 - Modo labirinto sem bordas\n");
         printf("4 - Modo história interativo\n");
-        printf("5 - Gerador de labirintos\n");
-        printf("6 - Sair\n");
+        printf("5 - Sair\n");
         
-        int escolha;
-        printf("Digite a opcao: ");
+        printf("Digite a opção: ");
         scanf("%d", &escolha);
         switch(escolha){
             case 1: {
@@ -98,29 +128,31 @@ int main(){
                 inicializaCaminhos(&caminhos);
                 encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos);
                 imprimeCaminhos(caminhos);
-                printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
-                char escolha;
-                getchar();
-                scanf("%c", &escolha);
-                if(escolha == 'S'){
-                    int num;
-                    printf("Digite o número do caminho: ");
-                    scanf("%d", &num);
-                    //duplica a matriz porque printCriativo modifica ela
-                    Sala matriz2[linhas][colunas];
-                    for(int i = 0; i < linhas; i++){
-                        for(int j = 0; j < colunas; j++){
-                            matriz2[i][j].conteudo = matriz[i][j].conteudo;
-                            matriz2[i][j].visitado = false;
+                if(caminhos.qtdCaminhos > 0){
+                    printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
+                    char escolha;
+                    getchar();
+                    scanf("%c", &escolha);
+                    if(escolha == 'S'){
+                        int num;
+                        printf("Digite o número do caminho: ");
+                        scanf("%d", &num);
+                        //duplica a matriz porque printCriativo modifica ela
+                        Sala matriz2[linhas][colunas];
+                        for(int i = 0; i < linhas; i++){
+                            for(int j = 0; j < colunas; j++){
+                                matriz2[i][j].conteudo = matriz[i][j].conteudo;
+                                matriz2[i][j].visitado = false;
+                            }
                         }
+                        NoCaminho* aux = caminhos.inicio->prox; 
+                        int contador = 1; 
+                        while(aux != NULL && contador != num) {
+                            aux = aux->prox;
+                            contador++;
+                        }
+                        printCriativo(linhas, colunas, matriz2, aux->vetorCaminho, aux->tamanhoCaminho, qtdChaves);
                     }
-                    NoCaminho* aux = caminhos.inicio->prox; 
-                    int contador = 1; 
-                    while(aux != NULL && contador != num) {
-                        aux = aux->prox;
-                        contador++;
-                    }
-                    printCriativo(linhas, colunas, matriz2, aux->vetorCaminho, aux->tamanhoCaminho, qtdChaves);
                 }
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
@@ -161,18 +193,14 @@ int main(){
                 break;
             }
             case 4: {
-                modoHistoriaInterativo(linhas, colunas, matriz);
-                break;
-            }
-            case 5: {
-                int m, n, pecas, chaves;
-                printf("Digite o número de linhas e colunas do labirinto, nessa ordem: ");
-                scanf("%d %d", &m, &n);
-                printf("Digite o número de peças de paredes do labirinto: ");
-                scanf("%d", &pecas);
-                printf("Digite o número de chaves do labirinto: ");
-                scanf("%d", &chaves);
-                gerador(m, n, pecas, chaves);
+                Sala matriz2[linhas][colunas];
+                for(int i = 0; i < linhas; i++){
+                    for(int j = 0; j < colunas; j++){
+                        matriz2[i][j].conteudo = matriz[i][j].conteudo;
+                        matriz2[i][j].visitado = false;
+                    }
+                }
+                modoHistoriaInterativo(linhas, colunas, matriz2);
                 break;
             }
             default:

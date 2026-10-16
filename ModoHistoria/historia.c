@@ -101,7 +101,7 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     PAUSA(TEMPO_PAUSA / 2);
     
     aplicarCorTexto(TEXTO_MAGENTA);
-    printf("\n- A sala atual de Teseu é marcada pela cor amarela, enquanto as salas já visitadas são marcadas pela cor verde.\n- Você deve guiar o herói dizendo uma das 4 direções (cima, baixo, esquerda ou direita) por vez.\n- Lembre-se: o herói não pode passar em uma sala do labirinto onde já esteve, pois há chances maiores dele se encontrar com os soldados!\n- Você tem 5 tentativas, no total, para adivinhar qual deverá ser a próxima sala que Teseu deve visitar, ou ele será alcançado pelos soldados.\n");
+    printf("\n- A sala atual de Teseu é marcada pela cor amarela, enquanto as salas já visitadas são marcadas pela cor verde.\n- Você deve guiar o herói dizendo uma das 4 direções (cima, baixo, esquerda ou direita) por vez.\n- Lembre-se: o herói não pode passar em uma sala do labirinto onde já esteve enquanto estava com você, pois há chances maiores dele se encontrar com os soldados!\n- Você tem 5 tentativas, no total, para adivinhar qual deverá ser a próxima sala que Teseu deve visitar, ou ele será alcançado pelos soldados.\n");
     resetarCores();
     aplicarCorFundo(FUNDO_MAGENTA);
     printf("\nAguarde alguns momentos enquanto o modo se inicia...");
