@@ -94,9 +94,10 @@ int main(){
         switch(escolha){
             case 1: {
                 int iPosicoes = 0;
+                int maiorPosicao = -1;
                 int qtdChavesEncontradas = 0;
                 clock_t inicio = clock();
-                bool encontrada = escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas);
+                bool encontrada = escolheCaminho(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas, &maiorPosicao);
                 clock_t fim = clock();
                 double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
                 if (encontrada){
@@ -120,6 +121,7 @@ int main(){
                 }
                 printf("Chamadas recursivas: %d\n", chamadasRecursivas);
                 printf("Tempo de execução: %.6f segundos\n", tempo);
+                printf("Nivel maximo: %d\n", maiorPosicao);
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
                     for(int j = 0; j < colunas; j++){
@@ -130,17 +132,19 @@ int main(){
             }
             case 2: {
                 int iPosicoes = 0;
+                int maiorPosicao = -1;
                 int qtdChavesEncontradas = 0;
                 ListaCaminhos caminhos;
                 inicializaCaminhos(&caminhos);
                 //medicao de tempo
                 clock_t inicio = clock();
-                encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos, &chamadasRecursivas);
+                encontraTodosCaminhos(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &caminhos, &chamadasRecursivas, &maiorPosicao);
                 clock_t fim = clock();
                 double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
                 imprimeCaminhos(caminhos);
                 printf("Chamadas recursivas: %d\n", chamadasRecursivas);
                 printf("Tempo de execução: %.6f segundos\n", tempo);
+                printf("Nivel maximo: %d\n", maiorPosicao);
                 if(caminhos.qtdCaminhos > 1){
                     printf("Deseja ver, visualmente, algum dos caminhos? (S ou N): ");
                     char escolha;
@@ -178,9 +182,10 @@ int main(){
             }
             case 3: {
                 int iPosicoes = 0;
+                int maiorPosicao = -1;
                 int qtdChavesEncontradas = 0;
                 clock_t inicio = clock();
-                bool encontrado =Cobrinha(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas);
+                bool encontrado =Cobrinha(posicaoInicial.x, posicaoInicial.y, linhas, colunas, matriz, qtdChaves, &qtdChavesEncontradas, posicoes, &iPosicoes, &chamadasRecursivas, &maiorPosicao);
                 clock_t fim = clock();
                 double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
                 if (encontrado){
@@ -204,6 +209,7 @@ int main(){
                 }
                 printf("Chamadas recursivas: %d\n", chamadasRecursivas);
                 printf("Tempo de execução: %.6f segundos\n", tempo);
+                printf("Nivel maximo: %d\n", maiorPosicao);
                 //reinicia o visitados da matriz, por conta de outras funções
                 for(int i = 0; i < linhas; i++){
                     for(int j = 0; j < colunas; j++){

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-
+#include <stdbool.h>
 #ifdef _WIN32
     #include <windows.h>
     #define PAUSA(ms) Sleep(ms) 
@@ -72,6 +72,7 @@ static void reiniciarVisitasLabirinto(int m, int n, Sala matriz[m][n]){
 
 void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     int filler = 0;
+    int filler2 = 0;
     /*
     - imprime a história, com cores e tempo entre as falas.
     - sorteia a posição inicial de Teseu e verifica se existe pelo menos 1 caminho válido até a saída, considerando que não existe nenhuma chave. Se a posição não for válida, sorteia novamente.
@@ -117,7 +118,7 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
         if((matriz[x][y].conteudo == '0' || matriz[x][y].conteudo == 'C')){
             int temp1 = 0, temp2 = 0;
             Posicao posicoes[n*m];
-            existeCaminho = escolheCaminho(x, y, m, n, matriz, 0, &temp1, posicoes, &temp2, &filler);
+            existeCaminho = escolheCaminho(x, y, m, n, matriz, 0, &temp1, posicoes, &temp2, &filler, &filler2);
             reiniciarVisitasLabirinto(m, n, matriz);
         }
     }
@@ -131,7 +132,7 @@ void modoHistoriaInterativo(int m, int n, Sala matriz[m][n]){
     inicializaCaminhos(&caminhos);
     int temp = 0, i = 0;
     Posicao posicoes[(m * n) + 1];
-    encontraTodosCaminhos(x, y, m, n, matriz, 0, &temp, posicoes, &i, &caminhos, &filler);
+    encontraTodosCaminhos(x, y, m, n, matriz, 0, &temp, posicoes, &i, &caminhos, &filler, &filler2);
 
     bool aindaPossuiTentativas = true;
     int numPassos = 1, tentativasRestantes = 5;

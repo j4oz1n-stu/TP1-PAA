@@ -1,6 +1,6 @@
 #ifndef LABIRINTO_H
 #define LABIRINTO_H
-
+#include <stdbool.h>
 typedef struct {
     char conteudo;
     bool visitado;
@@ -13,11 +13,11 @@ typedef struct{
 
 #include "../ListaCaminhos/listaCaminhos.h"
 
-bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, int *chamadasRecursivas);
-void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, ListaCaminhos *caminhosPossiveis, int *chamadasRecursivas);
+bool escolheCaminho(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, int *chamadasRecursivas, int *maiorPosicao);
+void encontraTodosCaminhos(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, ListaCaminhos *caminhosPossiveis, int *chamadasRecursivas, int *maiorPosicao);
 void limparTela(void);
 void printaMatriz (int m, int n, Sala matriz[m][n], int qtdChaves, int qtdChavesEncontradas, int passoAtual, int totalPassos);
 void printCriativo (int m, int n, Sala matriz[m][n], Posicao posicoes[], int iPosicoes, int qtdChaves);
-bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, int *chamadasRecursivas);
+bool Cobrinha(int x, int y, int m, int n, Sala matriz[m][n], int qtChaves, int *qtChavesEncontradas, Posicao posicoes[], int *iPosicoes, int *chamadasRecursivas, int *maiorPosicao);
 
 #endif
