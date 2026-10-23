@@ -316,12 +316,6 @@ void gerador(int x, int y, int peca, int chave){
 
 int escritor(char **matriz, int x, int y, int chave){
 
-    /*for (int i = 0; i < x; i++) {
-        for (int j = 0; j < y; j++) {
-            printf("%c ", matriz[i][j]);
-        }
-        printf("\n");
-    }*/
 
     FILE *arquivo = fopen("Testes/gerado.txt", "w");
 
